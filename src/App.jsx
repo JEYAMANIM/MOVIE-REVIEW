@@ -11,15 +11,16 @@ export default function App() {
   const [isHovered, setIsHovered] = useState(false)
   const scrollRef = useRef(null)
 
-  const fetchMovies = async () => {
-    if (!searchTerm.trim()) return
+  // 🚀 NEW: Unified fetch function that takes a query
+  const fetchMovies = async (query) => {
+    if (!query.trim()) return
 
     setLoading(true)
     setError('')
 
     try {
       const response = await fetch(
-        `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(searchTerm)}`
+        `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`
       )
       const data = await response.json()
 
@@ -34,6 +35,17 @@ export default function App() {
     } finally {
       setLoading(false)
     }
+  }
+
+  // 🚀 NEW: Load initial movies when the website first opens
+  useEffect(() => {
+    // You can change 'marvel' to any default keyword you want (e.g., 'batman', 'action', 'dark')
+    fetchMovies('marvel')
+  }, [])
+
+  // Handle the manual search button click
+  const handleSearch = () => {
+    fetchMovies(searchTerm)
   }
 
   // 🔄 AUTO-MOVE CAROUSEL EFFECT
@@ -74,17 +86,17 @@ export default function App() {
       <h1 className="text-4xl font-bold mb-6 tracking-tight drop-shadow-md">Movie review</h1>
       
       {/* Search Input */}
-      <div className="flex gap-2 mb-8">
+      <div className="flex gap-2 mb-8 z-10">
         <input 
           type="text" 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && fetchMovies()}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           placeholder="Enter movie title (e.g. Dark)" 
-          className="px-4 py-2 rounded-md bg-zinc-900/80 border border-zinc-700/60 text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 backdrop-blur-sm w-72"
+          className="px-4 py-2 rounded-md bg-zinc-900/80 border border-zinc-700/60 text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 backdrop-blur-sm w-72 shadow-lg"
         />
         <button 
-          onClick={fetchMovies}
+          onClick={handleSearch}
           className="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-md font-semibold text-white shadow-lg shadow-blue-600/20 transition"
         >
           search
@@ -92,11 +104,11 @@ export default function App() {
       </div>
 
       {/* Loading & Error States */}
-      {loading && <p className="text-slate-400 animate-pulse">Searching movies...</p>}
-      {error && <p className="text-red-400 font-medium">{error}</p>}
+      {loading && <p className="text-blue-400 font-semibold animate-pulse mb-4">Fetching movies...</p>}
+      {error && <p className="text-red-400 font-medium mb-4">{error}</p>}
 
       {/* 🎬 AUTO-MOVING CAROUSEL SECTION */}
-      {movies.length > 0 && (
+      {movies.length > 0 && !loading && (
         <div className="relative w-full max-w-6xl group mt-4">
           
           {/* Left Arrow Button */}
@@ -169,7 +181,7 @@ export default function App() {
               ✕
             </button>
 
-            <div className="flex flex-col sm:flex-row gap-6 mb-6">
+            <div className="flex flex-col sm:flex-row gap-6 mb-6 mt-2">
               {/* Poster */}
               <img 
                 src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://via.placeholder.com/210x295?text=No+Poster'} 
