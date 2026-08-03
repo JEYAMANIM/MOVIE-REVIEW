@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-// 🌸 CURATED ANIME MOVIES COLLECTION
+// 🌸 CURATED ANIME MOVIES COLLECTION (Updated with reliable TMDB image links)
 const CURATED_ANIME_MOVIES = [
   {
     id: 'anime-1',
@@ -12,8 +12,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 106,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtMDA4MS00NjAzLTgxM2UtZGJiFA2NDgwMGFiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtMDA4MS00NjAzLTgxM2UtZGJiFA2NDgwMGFiXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg',
+      original: 'https://image.tmdb.org/t/p/original/q719jXXEzOoYaps6babgKnONONX.jpg'
     },
     summary: 'Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?',
     searchQuery: 'Your Name full movie'
@@ -28,8 +28,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 130,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTUtMTBmZS00Y2M1LWEyMmMtOWViMjliM2RmMGE1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTUtMTBmZS00Y2M1LWEyMmMtOWViMjliM2RmMGE1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/5lAMQMWpXMNqOaTXZ9fFWA6wH8m.jpg',
+      original: 'https://image.tmdb.org/t/p/original/5lAMQMWpXMNqOaTXZ9fFWA6wH8m.jpg'
     },
     summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
     searchQuery: 'A Silent Voice full movie'
@@ -44,8 +44,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 122,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2IbYjkxY2FlZDIyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2IbYjkxY2FlZDIyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/vIeu8WysGzFpFBhjX8hPEO67WIA.jpg',
+      original: 'https://image.tmdb.org/t/p/original/vIeu8WysGzFpFBhjX8hPEO67WIA.jpg'
     },
     summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
     searchQuery: 'Suzume full movie'
@@ -60,8 +60,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 112,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNzE4ZDFjOWItMzA2ZS00Mzc3LTgzOTYtZWFlM2E5MDgzYmI0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BNzE4ZDFjOWItMzA2ZS00Mzc3LTgzOTYtZWFlM2E5MDgzYmI0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/q2iCSwlJqI3iH2t5zB8Xp9g5gEu.jpg',
+      original: 'https://image.tmdb.org/t/p/original/q2iCSwlJqI3iH2t5zB8Xp9g5gEu.jpg'
     },
     summary: 'A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.',
     searchQuery: 'Weathering With You full movie'
@@ -76,8 +76,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 46,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BYzA0M2VmOTYtZTliNC00MDFiLWEyY2UtOWRjNWU4NWU0M2JkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BYzA0M2VmOTYtZTliNC00MDFiLWEyY2UtOWRjNWU4NWU0M2JkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/tqxON4A73O7q0uS3gEqo77z3eCq.jpg',
+      original: 'https://image.tmdb.org/t/p/original/tqxON4A73O7q0uS3gEqo77z3eCq.jpg'
     },
     summary: 'A 15-year-old boy and a 27-year-old woman find an unexpected friendship in Tokyo during the rainy season through shoe design and poetry.',
     searchQuery: 'The Garden of Words full movie'
@@ -92,8 +92,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 125,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2Q5NWJiYWMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2Q5NWJiYWMyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg'
+      medium: 'https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRU84Wq1NeeP.jpg',
+      original: 'https://image.tmdb.org/t/p/original/39wmItIWsg5sZMyRU84Wq1NeeP.jpg'
     },
     summary: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
     searchQuery: 'Spirited Away full movie'
@@ -117,7 +117,7 @@ const CATEGORIES = [
   'Entertainment', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family'
 ]
 
-// 🎬 MOVIE CARD COMPONENT
+// 🎬 MOVIE CARD COMPONENT (Added onError image fallback)
 const MovieCard = ({ show, onClick }) => (
   <div 
     onClick={onClick}
@@ -128,6 +128,10 @@ const MovieCard = ({ show, onClick }) => (
         src={show.image?.medium || 'https://via.placeholder.com/210x295?text=No+Poster'} 
         alt={show.name}
         className="w-full h-72 object-cover"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = 'https://via.placeholder.com/210x295?text=Image+Unavailable';
+        }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
         <span className="bg-red-600 text-xs px-3 py-1 rounded-full text-white font-bold shadow-lg">
@@ -448,7 +452,7 @@ export default function App() {
         )}
       </div>
 
-      {/* 🎬 MOVIE DETAILS MODAL */}
+      {/* 🎬 MOVIE DETAILS MODAL (Added onError image fallback) */}
       {selectedMovie && !playingVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
           <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.15)] text-white">
@@ -462,6 +466,10 @@ export default function App() {
                 src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://via.placeholder.com/300x450?text=No+Poster'} 
                 alt={selectedMovie.name} 
                 className="w-full md:w-72 h-auto object-cover rounded-lg shadow-2xl border border-zinc-800"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/300x450?text=Image+Unavailable';
+                }}
               />
 
               <div className="flex-1 flex flex-col justify-center">
