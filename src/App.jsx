@@ -1,22 +1,22 @@
 import { useState, useEffect, useRef } from 'react'
 
-// Curated list of high-quality TVMaze poster URLs for the animated background
+// Curated list of high-quality posters for the animated background
 const BACKGROUND_POSTERS = [
-  "https://static.tvmaze.com/uploads/images/medium_portrait/213/534017.jpg", // Witcher
-  "https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg", // Stranger Things
-  "https://static.tvmaze.com/uploads/images/medium_portrait/402/1006397.jpg", // The Boys
-  "https://static.tvmaze.com/uploads/images/medium_portrait/417/1044456.jpg", // House of the Dragon
-  "https://static.tvmaze.com/uploads/images/medium_portrait/362/906711.jpg", // Arcane
-  "https://static.tvmaze.com/uploads/images/medium_portrait/297/744253.jpg", // Invincible
-  "https://static.tvmaze.com/uploads/images/medium_portrait/78/19547.jpg",   // Daredevil
-  "https://static.tvmaze.com/uploads/images/medium_portrait/476/1190697.jpg", // Loki
-  "https://static.tvmaze.com/uploads/images/medium_portrait/481/1202727.jpg", // Gen V
-  "https://static.tvmaze.com/uploads/images/medium_portrait/498/1247240.jpg", // Fallout
-  "https://static.tvmaze.com/uploads/images/medium_portrait/400/1000562.jpg", // Severance
-  "https://static.tvmaze.com/uploads/images/medium_portrait/399/999587.jpg", // Peaky Blinders
+  "https://static.tvmaze.com/uploads/images/medium_portrait/213/534017.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/402/1006397.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/417/1044456.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/362/906711.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/297/744253.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/78/19547.jpg",
+  "https://static.tvmaze.com/uploads/images/medium_portrait/476/1190697.jpg",
 ]
 
-const CATEGORIES = ['Home', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family']
+// 🚀 NEW: Updated Categories
+const CATEGORIES = [
+  'Home', 'Anime Series', 'Anime Movie', 'Series', 
+  'Entertainment', 'Action', 'Romance', 'Horror', 'Adventure'
+]
 
 // 🎬 REUSABLE MOVIE CARD COMPONENT
 const MovieCard = ({ show, onClick }) => (
@@ -65,24 +65,14 @@ const MovieRow = ({ title, movies, onMovieSelect }) => {
       <h2 className="text-2xl font-bold mb-4 text-white pl-4 border-l-4 border-red-600 drop-shadow-lg">
         {title}
       </h2>
-      
-      {/* Left Arrow */}
       <button 
         onClick={() => scroll('left')}
         className="absolute left-0 top-[55%] -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-r-xl w-12 h-24 flex items-center justify-center transition opacity-0 group-hover:opacity-100 shadow-2xl border-y border-r border-zinc-800 text-2xl backdrop-blur-sm"
-      >
-        ❮
-      </button>
-
-      {/* Right Arrow */}
+      >❮</button>
       <button 
         onClick={() => scroll('right')}
         className="absolute right-0 top-[55%] -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-l-xl w-12 h-24 flex items-center justify-center transition opacity-0 group-hover:opacity-100 shadow-2xl border-y border-l border-zinc-800 text-2xl backdrop-blur-sm"
-      >
-        ❯
-      </button>
-
-      {/* Scroll Container */}
+      >❯</button>
       <div 
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto py-4 px-4 scroll-smooth no-scrollbar"
@@ -104,9 +94,11 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('Home')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  
   const [selectedMovie, setSelectedMovie] = useState(null)
+  // 🚀 NEW: State for Full Screen Video Player
+  const [playingVideo, setPlayingVideo] = useState(null)
 
-  // 🚀 Fetch a massive list of movies on startup
   useEffect(() => {
     const fetchInitialShows = async () => {
       try {
@@ -122,7 +114,6 @@ export default function App() {
     fetchInitialShows()
   }, [])
 
-  // 🚀 Handle Search Function
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
       setIsSearching(false)
@@ -134,7 +125,7 @@ export default function App() {
       const response = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(searchTerm)}`)
       const data = await response.json()
       setSearchResults(data.map(item => item.show))
-      setActiveCategory('') // Clear category highlight
+      setActiveCategory('')
     } catch (err) {
       setError('Search failed.')
     } finally {
@@ -142,9 +133,24 @@ export default function App() {
     }
   }
 
-  // Helper to filter movies by genre
-  const getMoviesByGenre = (genre) => {
-    return allShows.filter(show => show.genres?.includes(genre))
+  // 🚀 NEW: Advanced Filtering for Custom Categories
+  const getCategoryMovies = (category) => {
+    switch(category) {
+      case 'Anime Series':
+        return allShows.filter(show => show.genres?.includes('Anime'))
+      case 'Anime Movie':
+        // TVMaze relies heavily on shows, but we simulate movies by runtime/type
+        return allShows.filter(show => show.genres?.includes('Anime') && (show.type === 'Movie' || show.runtime > 80))
+      case 'Series':
+        // Targets "Dark", "From" style mystery/thriller series
+        return allShows.filter(show => show.genres?.includes('Mystery') || show.genres?.includes('Thriller') || show.genres?.includes('Crime'))
+      case 'Entertainment':
+        // General entertainment movies/shows
+        return allShows.filter(show => show.genres?.includes('Comedy') || show.genres?.includes('Reality'))
+      default:
+        // Action, Romance, Horror, etc.
+        return allShows.filter(show => show.genres?.includes(category))
+    }
   }
 
   const stripHtml = (html) => {
@@ -154,26 +160,20 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden pb-12">
-      
-      {/* 🚀 CUSTOM CSS FOR BACKGROUND & SCROLLBAR */}
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .bg-wall-container {
           transform: rotate(-12deg) scale(1.3);
-          width: 150vw; height: 150vh;
-          position: fixed; left: -25vw; top: -25vh;
-          display: flex; gap: 1rem;
+          width: 150vw; height: 150vh; position: fixed; left: -25vw; top: -25vh; display: flex; gap: 1rem;
         }
-        .scroll-column {
-          display: flex; flex-direction: column; gap: 1rem; width: 250px;
-        }
+        .scroll-column { display: flex; flex-direction: column; gap: 1rem; width: 250px; }
         .animate-scroll-up { animation: scrollUp 45s linear infinite; }
         .animate-scroll-down { animation: scrollDown 45s linear infinite; }
         @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
       `}</style>
 
-      {/* 🎬 ANIMATED BACKGROUND WALL */}
+      {/* BACKGROUND WALL */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-20">
         <div className="bg-wall-container">
           {[...Array(10)].map((_, colIndex) => (
@@ -187,17 +187,17 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
       </div>
 
-      {/* 🌟 NAVIGATION BAR */}
-      <nav className="fixed top-0 w-full z-40 bg-gradient-to-b from-black via-black/80 to-transparent pt-6 pb-8 px-8 flex flex-col md:flex-row justify-between items-center gap-4 transition-all">
-        <div className="flex flex-col md:flex-row items-center gap-8 w-full md:w-auto">
+      {/* NAVIGATION BAR */}
+      <nav className="fixed top-0 w-full z-40 bg-gradient-to-b from-black via-black/90 to-transparent pt-6 pb-8 px-8 flex flex-col xl:flex-row justify-between items-center gap-6 transition-all">
+        <div className="flex flex-col xl:flex-row items-center gap-8 w-full xl:w-auto">
           <h1 
             onClick={() => { setIsSearching(false); setActiveCategory('Home'); setSearchTerm(''); }}
-            className="text-4xl font-extrabold text-red-600 uppercase tracking-widest cursor-pointer drop-shadow-lg"
+            className="text-4xl font-extrabold text-red-600 uppercase tracking-widest cursor-pointer drop-shadow-lg shrink-0"
           >
             Review
           </h1>
           
-          <ul className="flex flex-wrap justify-center gap-4 text-sm font-semibold text-zinc-300">
+          <ul className="flex overflow-x-auto w-full xl:w-auto pb-2 xl:pb-0 scroll-smooth no-scrollbar gap-5 text-sm font-semibold text-zinc-300 whitespace-nowrap">
             {CATEGORIES.map(category => (
               <li 
                 key={category} 
@@ -210,34 +210,31 @@ export default function App() {
           </ul>
         </div>
 
-        {/* Search Input */}
-        <div className="flex gap-2 w-full md:w-auto justify-center">
+        {/* Search */}
+        <div className="flex gap-2 w-full sm:w-auto justify-center shrink-0">
           <input 
             type="text" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Titles, people, genres..." 
-            className="px-4 py-2 rounded bg-zinc-900/80 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 backdrop-blur-md w-64 text-sm shadow-inner"
+            className="px-4 py-2 rounded bg-zinc-900/80 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 backdrop-blur-md w-full sm:w-64 text-sm shadow-inner"
           />
           <button 
             onClick={handleSearch}
             className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold text-white shadow-lg transition"
-          >
-            Search
-          </button>
+          >Search</button>
         </div>
       </nav>
 
-      {/* 🌟 MAIN CONTENT AREA */}
-      <div className="relative z-10 w-full px-8 pt-44">
+      {/* MAIN CONTENT */}
+      <div className="relative z-10 w-full px-8 pt-56 xl:pt-40">
         
         {loading && <div className="text-center text-red-500 font-bold text-2xl animate-pulse mt-20">Loading Library...</div>}
         {error && <div className="text-center text-red-400 font-bold mt-20">{error}</div>}
 
         {!loading && (
           <>
-            {/* SEARCH RESULTS VIEW */}
             {isSearching ? (
               <div>
                 <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">Search Results</h2>
@@ -253,27 +250,25 @@ export default function App() {
               </div>
             ) : 
             
-            /* HOME PAGE VIEW (MULTIPLE ROWS) */
             activeCategory === 'Home' ? (
               <div className="flex flex-col gap-4">
-                <MovieRow title="Trending Action" movies={getMoviesByGenre('Action')} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Epic Fantasy & Sci-Fi" movies={getMoviesByGenre('Fantasy').concat(getMoviesByGenre('Science-Fiction'))} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Romantic Getaways" movies={getMoviesByGenre('Romance')} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Chilling Horror" movies={getMoviesByGenre('Horror')} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Adventure Awaits" movies={getMoviesByGenre('Adventure')} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Family Movie Night" movies={getMoviesByGenre('Family')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Intense Series (Dark, From)" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Anime Series" movies={getCategoryMovies('Anime Series')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Blockbuster Action" movies={getCategoryMovies('Action')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Entertainment & Comedy" movies={getCategoryMovies('Entertainment')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Chilling Horror" movies={getCategoryMovies('Horror')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Romance & Drama" movies={getCategoryMovies('Romance')} onMovieSelect={setSelectedMovie} />
               </div>
             ) : 
             
-            /* SINGLE CATEGORY VIEW (GRID) */
             (
               <div>
-                <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">{activeCategory} Movies</h2>
+                <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">{activeCategory}</h2>
                 <div className="flex flex-wrap gap-6 justify-center md:justify-start">
-                  {getMoviesByGenre(activeCategory).map(show => (
+                  {getCategoryMovies(activeCategory).map(show => (
                     <MovieCard key={show.id} show={show} onClick={() => setSelectedMovie(show)} />
                   ))}
-                  {getMoviesByGenre(activeCategory).length === 0 && (
+                  {getCategoryMovies(activeCategory).length === 0 && (
                     <p className="text-zinc-400 text-lg">No movies found in this category.</p>
                   )}
                 </div>
@@ -283,17 +278,14 @@ export default function App() {
         )}
       </div>
 
-      {/* 🎬 MODAL POPUP (MOVIE DETAILS) */}
-      {selectedMovie && (
+      {/* 🎬 MODAL POPUP (DETAILS) */}
+      {selectedMovie && !playingVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
           <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.15)] text-white">
-            
             <button 
               onClick={() => setSelectedMovie(null)}
               className="absolute top-4 right-4 bg-zinc-900 hover:bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center transition font-bold shadow-lg z-10"
-            >
-              ✕
-            </button>
+            >✕</button>
 
             <div className="flex flex-col md:flex-row gap-8">
               <img 
@@ -314,34 +306,64 @@ export default function App() {
                 </div>
 
                 <div className="flex items-center gap-4 mb-6 text-sm font-semibold">
-                  <span className="text-yellow-500 text-lg flex items-center gap-1">
-                    ⭐ {selectedMovie.rating?.average || 'N/A'}
-                  </span>
+                  <span className="text-yellow-500 text-lg flex items-center gap-1">⭐ {selectedMovie.rating?.average || 'N/A'}</span>
                   <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.premiered?.substring(0, 4) || 'Unknown'}</span>
                   <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.language || 'N/A'}</span>
-                  <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.runtime ? `${selectedMovie.runtime} min` : 'N/A'}</span>
                 </div>
 
                 <p className="text-zinc-300 text-base leading-relaxed mb-8">
                   {stripHtml(selectedMovie.summary)}
                 </p>
 
-                <a 
-                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedMovie.name + ' official trailer')}`}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-lg gap-3 transition transform hover:scale-105 shadow-lg shadow-red-600/30 text-lg"
-                >
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                  </svg>
-                  Watch Trailer on YouTube
-                </a>
+                {/* 🚀 NEW: Play Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 w-full">
+                  <button 
+                    onClick={() => setPlayingVideo(selectedMovie)}
+                    className="flex-1 inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-lg gap-3 transition transform hover:scale-105 shadow-lg shadow-red-600/30 text-lg"
+                  >
+                    ▶ Play Full Video
+                  </button>
+                  <a 
+                    href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedMovie.name + ' official trailer')}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-8 py-4 rounded-lg gap-3 transition transform hover:scale-105 shadow-lg text-lg border border-zinc-700"
+                  >
+                    Watch Trailer
+                  </a>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
       )}
+
+      {/* 🚀 NEW: FULL SCREEN VIDEO PLAYER */}
+      {playingVideo && (
+        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center animate-in fade-in zoom-in duration-300">
+          
+          <button 
+            onClick={() => setPlayingVideo(null)}
+            className="absolute top-6 right-8 z-50 bg-black/50 hover:bg-red-600 text-white rounded-full w-14 h-14 flex items-center justify-center transition font-bold text-2xl border border-zinc-700 backdrop-blur-md"
+            title="Close Player"
+          >✕</button>
+
+          {/* 
+            Since we don't have paid streaming rights, this iframe securely searches and embeds 
+            the best matching full-length episode/movie directly from YouTube.
+          */}
+          <iframe 
+            className="w-full h-full max-w-[1920px] max-h-[1080px] shadow-2xl"
+            src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(playingVideo.name + ' full movie episode')}&autoplay=1`}
+            title={`${playingVideo.name} Full Video`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+
     </div>
   )
 }
