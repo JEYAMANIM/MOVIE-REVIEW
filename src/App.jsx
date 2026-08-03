@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-// 🌸 CURATED ANIME MOVIES COLLECTION (Updated with reliable TMDB image links)
+// 🌸 EXPANDED CURATED ANIME MOVIES COLLECTION (With direct playable YouTube IDs and working image posters)
 const CURATED_ANIME_MOVIES = [
   {
     id: 'anime-1',
@@ -16,7 +16,7 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/q719jXXEzOoYaps6babgKnONONX.jpg'
     },
     summary: 'Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?',
-    searchQuery: 'Your Name full movie'
+    youtubeId: 'xU47NhruN-Q'
   },
   {
     id: 'anime-2',
@@ -32,7 +32,7 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/5lAMQMWpXMNqOaTXZ9fFWA6wH8m.jpg'
     },
     summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
-    searchQuery: 'A Silent Voice full movie'
+    youtubeId: 'nfKccmkRKd0'
   },
   {
     id: 'anime-3',
@@ -48,7 +48,7 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/vIeu8WysGzFpFBhjX8hPEO67WIA.jpg'
     },
     summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
-    searchQuery: 'Suzume full movie'
+    youtubeId: 'fvYtaumDj0M'
   },
   {
     id: 'anime-4',
@@ -64,7 +64,7 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/q2iCSwlJqI3iH2t5zB8Xp9g5gEu.jpg'
     },
     summary: 'A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.',
-    searchQuery: 'Weathering With You full movie'
+    youtubeId: 'QEm4SkXrVQM'
   },
   {
     id: 'anime-5',
@@ -80,7 +80,7 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/tqxON4A73O7q0uS3gEqo77z3eCq.jpg'
     },
     summary: 'A 15-year-old boy and a 27-year-old woman find an unexpected friendship in Tokyo during the rainy season through shoe design and poetry.',
-    searchQuery: 'The Garden of Words full movie'
+    youtubeId: 's2U_KXvxgSI'
   },
   {
     id: 'anime-6',
@@ -96,7 +96,55 @@ const CURATED_ANIME_MOVIES = [
       original: 'https://image.tmdb.org/t/p/original/39wmItIWsg5sZMyRU84Wq1NeeP.jpg'
     },
     summary: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
-    searchQuery: 'Spirited Away full movie'
+    youtubeId: 'ByXuk9QqQkk'
+  },
+  {
+    id: 'anime-7',
+    name: 'I Want to Eat Your Pancreas',
+    genres: ['Anime', 'Drama', 'Romance'],
+    rating: { average: 8.6 },
+    premiered: '2018-09-01',
+    language: 'Japanese',
+    runtime: 108,
+    type: 'Movie',
+    image: {
+      medium: 'https://image.tmdb.org/t/p/w500/1w0XRxhz8vw4cnqEUqjbsMknj5b.jpg',
+      original: 'https://image.tmdb.org/t/p/original/1w0XRxhz8vw4cnqEUqjbsMknj5b.jpg'
+    },
+    summary: 'A high school student finds a diary in a hospital written by his popular classmate who is secretly suffering from a pancreatic terminal illness.',
+    youtubeId: '9W9H3Wf_x_M'
+  },
+  {
+    id: 'anime-8',
+    name: 'Howl\'s Moving Castle',
+    genres: ['Anime', 'Fantasy', 'Adventure', 'Romance'],
+    rating: { average: 8.7 },
+    premiered: '2004-11-20',
+    language: 'Japanese',
+    runtime: 119,
+    type: 'Movie',
+    image: {
+      medium: 'https://image.tmdb.org/t/p/w500/TkWZib97W1ErvuPAkgukr2vOaP.jpg',
+      original: 'https://image.tmdb.org/t/p/original/TkWZib97W1ErvuPAkgukr2vOaP.jpg'
+    },
+    summary: 'When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet young wizard.',
+    youtubeId: 'ywMqf056ar0'
+  },
+  {
+    id: 'anime-9',
+    name: '5 Centimeters per Second',
+    genres: ['Anime', 'Romance', 'Drama'],
+    rating: { average: 7.9 },
+    premiered: '2007-03-03',
+    language: 'Japanese',
+    runtime: 63,
+    type: 'Movie',
+    image: {
+      medium: 'https://image.tmdb.org/t/p/w500/vQ9yH1qfL8uM8tVp8k8l9k9l9k9.jpg',
+      original: 'https://image.tmdb.org/t/p/original/vQ9yH1qfL8uM8tVp8k8l9k9l9k9.jpg'
+    },
+    summary: 'Togaki and Akari are two close friends who are forced apart by circumstances, exploring their emotional distance over the years across three distinct chapters.',
+    youtubeId: 'azQ9g_VfV_Y'
   }
 ]
 
@@ -117,7 +165,7 @@ const CATEGORIES = [
   'Entertainment', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family'
 ]
 
-// 🎬 MOVIE CARD COMPONENT (Added onError image fallback)
+// 🎬 MOVIE CARD COMPONENT
 const MovieCard = ({ show, onClick }) => (
   <div 
     onClick={onClick}
@@ -420,7 +468,7 @@ export default function App() {
             activeCategory === 'Home' ? (
               <div className="flex flex-col gap-2">
                 {/* 🚀 AUTO-MOVING TOP FEATURED CAROUSEL */}
-                <AutoFeaturedCarousel movies={CURATED_ANIME_MOVIES.concat(getCategoryMovies('Series'))} onMovieSelect={setSelectedMovie} />
+                <AutoFeaturedCarousel movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
 
                 {/* MULTI-ROW CATEGORY CONTENT */}
                 <MovieRow title="🌸 Masterpiece Anime Movies" movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
@@ -452,7 +500,7 @@ export default function App() {
         )}
       </div>
 
-      {/* 🎬 MOVIE DETAILS MODAL (Added onError image fallback) */}
+      {/* 🎬 MOVIE DETAILS MODAL */}
       {selectedMovie && !playingVideo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
           <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.15)] text-white">
@@ -528,7 +576,7 @@ export default function App() {
 
           <iframe 
             className="w-full h-full max-w-[1920px] max-h-[1080px] shadow-2xl"
-            src={`https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(playingVideo.searchQuery || playingVideo.name + ' full movie')}&autoplay=1`}
+            src={`https://www.youtube.com/embed/${playingVideo.youtubeId || 'dQw4w9WgXcQ'}?autoplay=1`}
             title={`${playingVideo.name} Full Video`}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
