@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-// A curated list of high-quality TVMaze poster URLs for the background wall
+// Curated list of high-quality TVMaze poster URLs for the animated background
 const BACKGROUND_POSTERS = [
   "https://static.tvmaze.com/uploads/images/medium_portrait/213/534017.jpg", // Witcher
   "https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg", // Stranger Things
@@ -16,67 +16,135 @@ const BACKGROUND_POSTERS = [
   "https://static.tvmaze.com/uploads/images/medium_portrait/399/999587.jpg", // Peaky Blinders
 ]
 
-export default function App() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [selectedMovie, setSelectedMovie] = useState(null)
-  
-  // Controls for auto-scrolling
-  const [isHovered, setIsHovered] = useState(false)
+const CATEGORIES = ['Home', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family']
+
+// 🎬 REUSABLE MOVIE CARD COMPONENT
+const MovieCard = ({ show, onClick }) => (
+  <div 
+    onClick={onClick}
+    className="min-w-[200px] max-w-[200px] flex flex-col items-center hover:scale-[1.08] hover:z-30 cursor-pointer transition-all duration-300 group flex-shrink-0"
+  >
+    <div className="relative w-full overflow-hidden rounded-xl shadow-xl shadow-black/50 border border-zinc-800 group-hover:border-red-600">
+      <img 
+        src={show.image?.medium || 'https://via.placeholder.com/210x295?text=No+Poster'} 
+        alt={show.name}
+        className="w-full h-72 object-cover"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+        <span className="bg-red-600 text-xs px-3 py-1 rounded-full text-white font-bold shadow-lg">
+          View Details
+        </span>
+      </div>
+    </div>
+    <h2 className="font-bold text-base text-center line-clamp-1 w-full mt-3 drop-shadow-md">{show.name}</h2>
+    <div className="flex justify-between w-full text-zinc-400 text-xs mt-1 px-2 font-medium">
+      <span>{show.premiered ? show.premiered.substring(0, 4) : 'N/A'}</span>
+      <span className="text-yellow-500 font-bold drop-shadow-md">
+        {show.rating?.average ? `⭐ ${show.rating.average}` : ''}
+      </span>
+    </div>
+  </div>
+)
+
+// 🎬 REUSABLE HORIZONTAL ROW COMPONENT
+const MovieRow = ({ title, movies, onMovieSelect }) => {
   const scrollRef = useRef(null)
 
-  const fetchMovies = async (query) => {
-    if (!query.trim()) return
-    setLoading(true)
-    setError('')
-    try {
-      const response = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`)
-      const data = await response.json()
-      if (data.length > 0) {
-        setMovies(data)
-      } else {
-        setError('No movies or shows found.')
-        setMovies([])
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { clientWidth } = scrollRef.current
+      const scrollAmount = direction === 'left' ? -clientWidth + 150 : clientWidth - 150
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
+  if (!movies || movies.length === 0) return null
+
+  return (
+    <div className="relative w-full group mb-10">
+      <h2 className="text-2xl font-bold mb-4 text-white pl-4 border-l-4 border-red-600 drop-shadow-lg">
+        {title}
+      </h2>
+      
+      {/* Left Arrow */}
+      <button 
+        onClick={() => scroll('left')}
+        className="absolute left-0 top-[55%] -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-r-xl w-12 h-24 flex items-center justify-center transition opacity-0 group-hover:opacity-100 shadow-2xl border-y border-r border-zinc-800 text-2xl backdrop-blur-sm"
+      >
+        ❮
+      </button>
+
+      {/* Right Arrow */}
+      <button 
+        onClick={() => scroll('right')}
+        className="absolute right-0 top-[55%] -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-l-xl w-12 h-24 flex items-center justify-center transition opacity-0 group-hover:opacity-100 shadow-2xl border-y border-l border-zinc-800 text-2xl backdrop-blur-sm"
+      >
+        ❯
+      </button>
+
+      {/* Scroll Container */}
+      <div 
+        ref={scrollRef}
+        className="flex gap-4 overflow-x-auto py-4 px-4 scroll-smooth no-scrollbar"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {movies.map(show => (
+          <MovieCard key={show.id} show={show} onClick={() => onMovieSelect(show)} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function App() {
+  const [allShows, setAllShows] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [activeCategory, setActiveCategory] = useState('Home')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [selectedMovie, setSelectedMovie] = useState(null)
+
+  // 🚀 Fetch a massive list of movies on startup
+  useEffect(() => {
+    const fetchInitialShows = async () => {
+      try {
+        const response = await fetch('https://api.tvmaze.com/shows')
+        const data = await response.json()
+        setAllShows(data)
+      } catch (err) {
+        setError('Failed to load database. Check connection.')
+      } finally {
+        setLoading(false)
       }
+    }
+    fetchInitialShows()
+  }, [])
+
+  // 🚀 Handle Search Function
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) {
+      setIsSearching(false)
+      return
+    }
+    setIsSearching(true)
+    setLoading(true)
+    try {
+      const response = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(searchTerm)}`)
+      const data = await response.json()
+      setSearchResults(data.map(item => item.show))
+      setActiveCategory('') // Clear category highlight
     } catch (err) {
-      setError('Something went wrong. Please check your connection.')
+      setError('Search failed.')
     } finally {
       setLoading(false)
     }
   }
 
-  // Load initial movies when the website first opens
-  useEffect(() => {
-    fetchMovies('marvel')
-  }, [])
-
-  const handleSearch = () => {
-    fetchMovies(searchTerm)
-  }
-
-  // AUTO-MOVE CAROUSEL EFFECT
-  useEffect(() => {
-    if (isHovered || movies.length === 0 || selectedMovie) return
-    const timer = setInterval(() => {
-      if (scrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
-        if (scrollLeft + clientWidth >= scrollWidth - 15) {
-          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
-        } else {
-          scrollRef.current.scrollBy({ left: 280, behavior: 'smooth' })
-        }
-      }
-    }, 2500)
-    return () => clearInterval(timer)
-  }, [isHovered, movies, selectedMovie])
-
-  const handleManualScroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -320 : 320
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-    }
+  // Helper to filter movies by genre
+  const getMoviesByGenre = (genre) => {
+    return allShows.filter(show => show.genres?.includes(genre))
   }
 
   const stripHtml = (html) => {
@@ -85,221 +153,192 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-black text-white flex flex-col items-center overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden pb-12">
       
-      {/* 🚀 CUSTOM CSS FOR THE NETFLIX BACKGROUND ANIMATION */}
+      {/* 🚀 CUSTOM CSS FOR BACKGROUND & SCROLLBAR */}
       <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         .bg-wall-container {
           transform: rotate(-12deg) scale(1.3);
-          width: 150vw;
-          height: 150vh;
-          position: absolute;
-          left: -25vw;
-          top: -25vh;
-          display: flex;
-          gap: 1rem;
+          width: 150vw; height: 150vh;
+          position: fixed; left: -25vw; top: -25vh;
+          display: flex; gap: 1rem;
         }
         .scroll-column {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          width: 250px;
+          display: flex; flex-direction: column; gap: 1rem; width: 250px;
         }
-        .animate-scroll-up {
-          animation: scrollUp 45s linear infinite;
-        }
-        .animate-scroll-down {
-          animation: scrollDown 45s linear infinite;
-        }
-        @keyframes scrollUp {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(-50%); }
-        }
-        @keyframes scrollDown {
-          0% { transform: translateY(-50%); }
-          100% { transform: translateY(0); }
-        }
+        .animate-scroll-up { animation: scrollUp 45s linear infinite; }
+        .animate-scroll-down { animation: scrollDown 45s linear infinite; }
+        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+        @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
       `}</style>
 
       {/* 🎬 ANIMATED BACKGROUND WALL */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-40">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-20">
         <div className="bg-wall-container">
-          {/* Create 8 columns for the background */}
-          {[...Array(8)].map((_, colIndex) => (
-            <div 
-              key={colIndex} 
-              // Alternate direction based on odd/even columns
-              className={`scroll-column ${colIndex % 2 === 0 ? 'animate-scroll-up' : 'animate-scroll-down'}`}
-            >
-              {/* Duplicate the array twice inside each column to create a seamless infinite loop */}
+          {[...Array(10)].map((_, colIndex) => (
+            <div key={colIndex} className={`scroll-column ${colIndex % 2 === 0 ? 'animate-scroll-up' : 'animate-scroll-down'}`}>
               {[...BACKGROUND_POSTERS, ...BACKGROUND_POSTERS].map((poster, imgIndex) => (
-                <img 
-                  key={imgIndex} 
-                  src={poster} 
-                  alt="bg-poster" 
-                  className="w-full rounded-lg shadow-2xl brightness-75"
-                />
+                <img key={imgIndex} src={poster} alt="bg" className="w-full rounded-lg shadow-2xl brightness-50" />
               ))}
             </div>
           ))}
         </div>
-
-        {/* Netflix-style Vignette Overlays (Darkens the edges) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/90"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
       </div>
 
-      {/* 🌟 FOREGROUND CONTENT (z-10 ensures it stays above background) */}
-      <div className="relative z-10 flex flex-col items-center w-full p-8">
-        <h1 className="text-5xl font-extrabold mb-8 tracking-tight drop-shadow-2xl mt-12 text-red-600 uppercase">
-          Movie Review
-        </h1>
-        
+      {/* 🌟 NAVIGATION BAR */}
+      <nav className="fixed top-0 w-full z-40 bg-gradient-to-b from-black via-black/80 to-transparent pt-6 pb-8 px-8 flex flex-col md:flex-row justify-between items-center gap-4 transition-all">
+        <div className="flex flex-col md:flex-row items-center gap-8 w-full md:w-auto">
+          <h1 
+            onClick={() => { setIsSearching(false); setActiveCategory('Home'); setSearchTerm(''); }}
+            className="text-4xl font-extrabold text-red-600 uppercase tracking-widest cursor-pointer drop-shadow-lg"
+          >
+            Review
+          </h1>
+          
+          <ul className="flex flex-wrap justify-center gap-4 text-sm font-semibold text-zinc-300">
+            {CATEGORIES.map(category => (
+              <li 
+                key={category} 
+                onClick={() => { setIsSearching(false); setActiveCategory(category); setSearchTerm(''); }}
+                className={`cursor-pointer transition hover:text-white hover:scale-110 ${activeCategory === category && !isSearching ? 'text-white border-b-2 border-red-600 pb-1' : ''}`}
+              >
+                {category}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {/* Search Input */}
-        <div className="flex gap-2 mb-12">
+        <div className="flex gap-2 w-full md:w-auto justify-center">
           <input 
             type="text" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            placeholder="Search for movies, shows..." 
-            className="px-5 py-3 rounded-md bg-black/60 border border-zinc-700/80 text-white placeholder-zinc-400 focus:outline-none focus:border-red-600 backdrop-blur-md w-80 shadow-2xl text-lg"
+            placeholder="Titles, people, genres..." 
+            className="px-4 py-2 rounded bg-zinc-900/80 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 backdrop-blur-md w-64 text-sm shadow-inner"
           />
           <button 
             onClick={handleSearch}
-            className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-md font-bold text-white shadow-xl transition"
+            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold text-white shadow-lg transition"
           >
             Search
           </button>
         </div>
+      </nav>
 
-        {/* Loading & Error States */}
-        {loading && <p className="text-red-500 font-bold animate-pulse mb-4 text-xl">Fetching library...</p>}
-        {error && <p className="text-red-400 font-medium mb-4">{error}</p>}
+      {/* 🌟 MAIN CONTENT AREA */}
+      <div className="relative z-10 w-full px-8 pt-44">
+        
+        {loading && <div className="text-center text-red-500 font-bold text-2xl animate-pulse mt-20">Loading Library...</div>}
+        {error && <div className="text-center text-red-400 font-bold mt-20">{error}</div>}
 
-        {/* AUTO-MOVING CAROUSEL */}
-        {movies.length > 0 && !loading && (
-          <div className="relative w-full max-w-[90rem] group mt-4">
-            
-            {/* Left Arrow */}
-            <button 
-              onClick={() => handleManualScroll('left')}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition shadow-2xl border border-zinc-800 text-xl backdrop-blur-sm"
-            >
-              ❮
-            </button>
-
-            {/* Right Arrow */}
-            <button 
-              onClick={() => handleManualScroll('right')}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition shadow-2xl border border-zinc-800 text-xl backdrop-blur-sm"
-            >
-              ❯
-            </button>
-
-            {/* Scroll Container */}
-            <div 
-              ref={scrollRef}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className="flex gap-6 overflow-x-auto py-6 px-4 scroll-smooth no-scrollbar"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {movies.map((item) => {
-                const show = item.show
-                return (
-                  <div 
-                    key={show.id} 
-                    onClick={() => setSelectedMovie(show)}
-                    className="min-w-[240px] max-w-[240px] flex flex-col items-center hover:scale-[1.08] hover:z-30 cursor-pointer transition-all duration-300 group flex-shrink-0"
-                  >
-                    <div className="relative w-full overflow-hidden rounded-xl shadow-2xl shadow-black border border-zinc-800 group-hover:border-red-600">
-                      <img 
-                        src={show.image?.medium || 'https://via.placeholder.com/210x295?text=No+Poster'} 
-                        alt={show.name}
-                        className="w-full h-80 object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                        <span className="bg-red-600 text-sm px-3 py-1 rounded-full text-white font-bold shadow-lg">
-                          Details
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <h2 className="font-bold text-lg text-center line-clamp-1 w-full mt-3 drop-shadow-md">{show.name}</h2>
-                    <div className="flex justify-between w-full text-zinc-400 text-sm mt-1 px-2 font-medium">
-                      <span>{show.premiered ? show.premiered.substring(0, 4) : 'N/A'}</span>
-                      <span className="text-yellow-500 font-bold drop-shadow-md">
-                        {show.rating?.average ? `⭐ ${show.rating.average}` : ''}
-                      </span>
-                    </div>
+        {!loading && (
+          <>
+            {/* SEARCH RESULTS VIEW */}
+            {isSearching ? (
+              <div>
+                <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">Search Results</h2>
+                {searchResults.length === 0 ? (
+                  <p className="text-zinc-400 text-lg">No movies found for "{searchTerm}".</p>
+                ) : (
+                  <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+                    {searchResults.map(show => (
+                      <MovieCard key={show.id} show={show} onClick={() => setSelectedMovie(show)} />
+                    ))}
                   </div>
-                )
-              })}
-            </div>
-          </div>
+                )}
+              </div>
+            ) : 
+            
+            /* HOME PAGE VIEW (MULTIPLE ROWS) */
+            activeCategory === 'Home' ? (
+              <div className="flex flex-col gap-4">
+                <MovieRow title="Trending Action" movies={getMoviesByGenre('Action')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Epic Fantasy & Sci-Fi" movies={getMoviesByGenre('Fantasy').concat(getMoviesByGenre('Science-Fiction'))} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Romantic Getaways" movies={getMoviesByGenre('Romance')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Chilling Horror" movies={getMoviesByGenre('Horror')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Adventure Awaits" movies={getMoviesByGenre('Adventure')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Family Movie Night" movies={getMoviesByGenre('Family')} onMovieSelect={setSelectedMovie} />
+              </div>
+            ) : 
+            
+            /* SINGLE CATEGORY VIEW (GRID) */
+            (
+              <div>
+                <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">{activeCategory} Movies</h2>
+                <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+                  {getMoviesByGenre(activeCategory).map(show => (
+                    <MovieCard key={show.id} show={show} onClick={() => setSelectedMovie(show)} />
+                  ))}
+                  {getMoviesByGenre(activeCategory).length === 0 && (
+                    <p className="text-zinc-400 text-lg">No movies found in this category.</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
-      {/* 🎬 MODAL POPUP */}
+      {/* 🎬 MODAL POPUP (MOVIE DETAILS) */}
       {selectedMovie && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-lg transition-all">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto p-8 relative shadow-2xl text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.15)] text-white">
             
             <button 
               onClick={() => setSelectedMovie(null)}
-              className="absolute top-5 right-5 bg-zinc-800 hover:bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center transition font-bold shadow-lg"
+              className="absolute top-4 right-4 bg-zinc-900 hover:bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center transition font-bold shadow-lg z-10"
             >
               ✕
             </button>
 
-            <div className="flex flex-col md:flex-row gap-8 mb-6 mt-2">
+            <div className="flex flex-col md:flex-row gap-8">
               <img 
-                src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://via.placeholder.com/210x295?text=No+Poster'} 
+                src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://via.placeholder.com/300x450?text=No+Poster'} 
                 alt={selectedMovie.name} 
-                className="w-full md:w-64 h-auto object-cover rounded-xl shadow-2xl border border-zinc-800"
+                className="w-full md:w-72 h-auto object-cover rounded-lg shadow-2xl border border-zinc-800"
               />
 
-              <div className="flex-1">
-                <h2 className="text-4xl font-extrabold mb-3">{selectedMovie.name}</h2>
+              <div className="flex-1 flex flex-col justify-center">
+                <h2 className="text-4xl md:text-5xl font-extrabold mb-4">{selectedMovie.name}</h2>
                 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {selectedMovie.genres?.map((genre) => (
-                    <span key={genre} className="bg-zinc-800 text-zinc-300 text-xs px-3 py-1.5 rounded-full border border-zinc-700 font-semibold">
+                    <span key={genre} className="bg-red-600/20 text-red-400 text-xs px-3 py-1 rounded-full border border-red-600/30 font-bold uppercase tracking-wider">
                       {genre}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-4 mb-4 text-sm font-medium">
-                  <span className="text-yellow-500 text-lg">
-                    {selectedMovie.rating?.average ? `⭐ ${selectedMovie.rating.average} / 10` : '⭐ N/A'}
+                <div className="flex items-center gap-4 mb-6 text-sm font-semibold">
+                  <span className="text-yellow-500 text-lg flex items-center gap-1">
+                    ⭐ {selectedMovie.rating?.average || 'N/A'}
                   </span>
-                  <span className="bg-zinc-800 px-2 py-1 rounded text-zinc-300">{selectedMovie.premiered?.substring(0, 4) || 'Unknown'}</span>
-                  <span className="bg-zinc-800 px-2 py-1 rounded text-zinc-300">{selectedMovie.language || 'N/A'}</span>
+                  <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.premiered?.substring(0, 4) || 'Unknown'}</span>
+                  <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.language || 'N/A'}</span>
+                  <span className="bg-zinc-800 px-2 py-1 rounded">{selectedMovie.runtime ? `${selectedMovie.runtime} min` : 'N/A'}</span>
                 </div>
 
-                <h3 className="font-bold text-lg mb-2 text-zinc-200 border-b border-zinc-800 pb-2">Overview</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed max-h-40 overflow-y-auto pr-2">
+                <p className="text-zinc-300 text-base leading-relaxed mb-8">
                   {stripHtml(selectedMovie.summary)}
                 </p>
+
+                <a 
+                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedMovie.name + ' official trailer')}`}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-lg gap-3 transition transform hover:scale-105 shadow-lg shadow-red-600/30 text-lg"
+                >
+                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                  </svg>
+                  Watch Trailer on YouTube
+                </a>
               </div>
             </div>
-
-            <div className="border-t border-zinc-800 pt-6 mt-6">
-              <a 
-                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(selectedMovie.name + ' official trailer')}`}
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-4 rounded-xl flex items-center justify-center gap-3 transition transform shadow-lg shadow-red-600/20 text-lg"
-              >
-                <svg className="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                </svg>
-                Watch Trailer
-              </a>
-            </div>
-
           </div>
         </div>
       )}
