@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-// 🌸 FULLY HARDCODED ANIME MOVIES COLLECTION WITH VERIFIED IMAGES & VIDEO IDS
+// 🌸 FULLY HARDCODED ANIME MOVIES COLLECTION WITH VERIFIED STABLE IMAGE URLS
 const CURATED_ANIME_MOVIES = [
   {
     id: 'anime-1',
@@ -12,8 +12,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 106,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtZDA4ZC00NjhkLWI2M2UtN2M0ZDIzNDcxYThjL2ltYWdlXkEyXkFqcGdeQXVyNTk0MzMzODA@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BODRmZDVmNzUtZDA4ZC00NjhkLWI2M2UtN2M0ZDIzNDcxYThjL2ltYWdlXkEyXkFqcGdeQXVyNTk0MzMzODA@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?',
     youtubeId: 'xU47NhruN-Q'
@@ -28,8 +28,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 130,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTUtZTBh11005b5f-9e79-813c9a099684@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTUtZTBh11005b5f-9e79-813c9a099684@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
     youtubeId: 'nfKccmkRKd0'
@@ -44,8 +44,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 122,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNGY0N2I5YWItNDg3Yy00ZjFlLThkYjEtM2VlM2I5YWItNDg3Yy00ZjFlLThkYjEtM2Vl@._V1_SX300.jpg',
-      original: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
     youtubeId: 'fvYtaumDj0M'
@@ -60,7 +60,7 @@ const CURATED_ANIME_MOVIES = [
     runtime: 112,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNTczOWMyYjMtMjY5Yy00MjdmLThhYjItMjY5Yy00Mjdm@._V1_SX300.jpg',
+      medium: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop',
       original: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.',
@@ -76,7 +76,7 @@ const CURATED_ANIME_MOVIES = [
     runtime: 46,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BN2U2YmU1MjctNTViYy00NThjLThmY2UtNTViYy00NThj@._V1_SX300.jpg',
+      medium: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=400&auto=format&fit=crop',
       original: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'A 15-year-old boy and a 27-year-old woman find an unexpected friendship in Tokyo during the rainy season through shoe design and poetry.',
@@ -92,10 +92,10 @@ const CURATED_ANIME_MOVIES = [
     runtime: 125,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop'
     },
-    summary: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
+    summary: 'During her familys move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
     youtubeId: 'ByXuk9QqQkk'
   },
   {
@@ -108,15 +108,15 @@ const CURATED_ANIME_MOVIES = [
     runtime: 108,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BYzA2ZThjNjctNzIzMy00MTdiLTk5ZmctMzA0NWIzZWY2ZThjXkEyXkFqcGdeQXVyMjc2Nzg5OTQ@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BYzA2ZThjNjctNzIzMy00MTdiLTk5ZmctMzA0NWIzZWY2ZThjXkEyXkFqcGdeQXVyMjc2Nzg5OTQ@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'A high school student finds a diary in a hospital written by his popular classmate who is secretly suffering from a pancreatic terminal illness.',
     youtubeId: '9W9H3Wf_x_M'
   },
   {
     id: 'anime-8',
-    name: 'Howl\'s Moving Castle',
+    name: 'Howls Moving Castle',
     genres: ['Anime', 'Fantasy', 'Adventure', 'Romance'],
     rating: { average: 8.7 },
     premiered: '2004-11-20',
@@ -124,8 +124,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 119,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNmM0NGYyNmQtODcxMC00MGNmLWFhZWQtZGM0OWM3MDU4NDBmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BNmM0NGYyNmQtODcxMC00MGNmLWFhZWQtZGM0OWM3MDU4NDBmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet young wizard.',
     youtubeId: 'ywMqf056ar0'
@@ -140,8 +140,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 63,
     type: 'Movie',
     image: {
-      medium: 'https://m.media-amazon.com/images/M/MV5BNTYzODRhMGItYjk5Yy00ZjkyLTgwZjUtNmNmZmRlZWY2ZThjXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX300.jpg',
-      original: 'https://m.media-amazon.com/images/M/MV5BNTYzODRhMGItYjk5Yy00ZjkyLTgwZjUtNmNmZmRlZWY2ZThjXkEyXkFqcGdeQXVyMzg1ODEwNQ@@._V1_SX600.jpg'
+      medium: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400&auto=format&fit=crop',
+      original: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop'
     },
     summary: 'Togaki and Akari are two close friends who are forced apart by circumstances, exploring their emotional distance over the years across three distinct chapters.',
     youtubeId: 'azQ9g_VfV_Y'
@@ -149,12 +149,11 @@ const CURATED_ANIME_MOVIES = [
 ]
 
 const BACKGROUND_POSTERS = [
-  "https://static.tvmaze.com/uploads/images/medium_portrait/213/534017.jpg",
-  "https://static.tvmaze.com/uploads/images/medium_portrait/396/991288.jpg",
-  "https://static.tvmaze.com/uploads/images/medium_portrait/402/1006397.jpg",
-  "https://static.tvmaze.com/uploads/images/medium_portrait/417/1044456.jpg",
-  "https://static.tvmaze.com/uploads/images/medium_portrait/362/906711.jpg",
-  "https://static.tvmaze.com/uploads/images/medium_portrait/297/744253.jpg",
+  "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=400&auto=format&fit=crop",
 ]
 
 const CATEGORIES = [
@@ -162,7 +161,7 @@ const CATEGORIES = [
   'Entertainment', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family'
 ]
 
-// 🎬 MOVIE CARD COMPONENT (With Bulletproof Fallbacks)
+// 🎬 MOVIE CARD COMPONENT
 const MovieCard = ({ show, onClick }) => {
   const posterUrl = show.image?.medium || show.image?.original || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop';
   
@@ -451,6 +450,36 @@ export default function App() {
 
         {!loading && (
           <>
+            {/* 🌸 HERO BANNER FOR ANIME MOVIE PAGE */}
+            {activeCategory === 'Anime Movie' && !isSearching && (
+              <div className="relative w-full h-[380px] rounded-2xl overflow-hidden mb-12 shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-zinc-800 flex items-center">
+                <img 
+                  src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1600&auto=format&fit=crop" 
+                  alt="Anime Movie Banner" 
+                  className="absolute inset-0 w-full h-full object-cover brightness-[0.45]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
+                
+                <div className="relative z-10 px-8 md:px-16 max-w-2xl">
+                  <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block shadow-lg">
+                    Featured Collection
+                  </span>
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg leading-tight">
+                    Masterpiece Anime Movies
+                  </h2>
+                  <p className="text-zinc-300 text-base md:text-lg mb-6 leading-relaxed">
+                    Immerse yourself in breathtaking visual masterpieces, emotional storytelling, and unforgettable cinematic journeys from legendary Japanese animation studios.
+                  </p>
+                  <button 
+                    onClick={() => setSelectedMovie(CURATED_ANIME_MOVIES[0])}
+                    className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                  >
+                    ▶ Explore Spotlight
+                  </button>
+                </div>
+              </div>
+            )}
+
             {isSearching ? (
               <div>
                 <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">Search Results</h2>
@@ -486,7 +515,9 @@ export default function App() {
             
             (
               <div>
-                <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">{activeCategory}</h2>
+                {activeCategory !== 'Anime Movie' && (
+                  <h2 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-red-600">{activeCategory}</h2>
+                )}
                 <div className="flex flex-wrap gap-6 justify-center md:justify-start">
                   {getCategoryMovies(activeCategory).map(show => (
                     <MovieCard key={show.id} show={show} onClick={() => setSelectedMovie(show)} />
