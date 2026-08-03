@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-// 🌸 FULLY HARDCODED ANIME MOVIES COLLECTION WITH VERIFIED STABLE IMAGE URLS
+// 🌸 PERFECT MATCHED ANIME MOVIES COLLECTION WITH STABLE DIRECT POSTER URLS
 const CURATED_ANIME_MOVIES = [
   {
     id: 'anime-1',
@@ -12,46 +12,14 @@ const CURATED_ANIME_MOVIES = [
     runtime: 106,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png',
+      original: 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png'
     },
     summary: 'Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?',
     youtubeId: 'xU47NhruN-Q'
   },
   {
     id: 'anime-2',
-    name: 'A Silent Voice (Koe no Katachi)',
-    genres: ['Anime', 'Drama', 'Romance'],
-    rating: { average: 8.8 },
-    premiered: '2016-09-17',
-    language: 'Japanese',
-    runtime: 130,
-    type: 'Movie',
-    image: {
-      medium: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=800&auto=format&fit=crop'
-    },
-    summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
-    youtubeId: 'nfKccmkRKd0'
-  },
-  {
-    id: 'anime-3',
-    name: 'Suzume (Suzume no Tojimari)',
-    genres: ['Anime', 'Adventure', 'Fantasy', 'Drama'],
-    rating: { average: 8.5 },
-    premiered: '2022-11-11',
-    language: 'Japanese',
-    runtime: 122,
-    type: 'Movie',
-    image: {
-      medium: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=800&auto=format&fit=crop'
-    },
-    summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
-    youtubeId: 'fvYtaumDj0M'
-  },
-  {
-    id: 'anime-4',
     name: 'Weathering With You (Tenki no Ko)',
     genres: ['Anime', 'Romance', 'Fantasy', 'Drama'],
     rating: { average: 8.3 },
@@ -60,14 +28,14 @@ const CURATED_ANIME_MOVIES = [
     runtime: 112,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg'
     },
     summary: 'A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.',
     youtubeId: 'QEm4SkXrVQM'
   },
   {
-    id: 'anime-5',
+    id: 'anime-3',
     name: 'The Garden of Words (Kotonoha no Niwa)',
     genres: ['Anime', 'Romance', 'Drama'],
     rating: { average: 8.1 },
@@ -76,27 +44,59 @@ const CURATED_ANIME_MOVIES = [
     runtime: 46,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/5/5b/The_Garden_of_Words_poster.png',
+      original: 'https://upload.wikimedia.org/wikipedia/en/5/5b/The_Garden_of_Words_poster.png'
     },
     summary: 'A 15-year-old boy and a 27-year-old woman find an unexpected friendship in Tokyo during the rainy season through shoe design and poetry.',
     youtubeId: 's2U_KXvxgSI'
   },
   {
-    id: 'anime-6',
-    name: 'Spirited Away',
-    genres: ['Anime', 'Adventure', 'Fantasy', 'Family'],
-    rating: { average: 9.0 },
-    premiered: '2001-07-20',
+    id: 'anime-4',
+    name: 'A Silent Voice (Koe no Katachi)',
+    genres: ['Anime', 'Drama', 'Romance'],
+    rating: { average: 8.8 },
+    premiered: '2016-09-17',
     language: 'Japanese',
-    runtime: 125,
+    runtime: 130,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg'
     },
-    summary: 'During her familys move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
-    youtubeId: 'ByXuk9QqQkk'
+    summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
+    youtubeId: 'nfKccmkRKd0'
+  },
+  {
+    id: 'anime-5',
+    name: '5 Centimeters per Second',
+    genres: ['Anime', 'Romance', 'Drama'],
+    rating: { average: 7.9 },
+    premiered: '2007-03-03',
+    language: 'Japanese',
+    runtime: 63,
+    type: 'Movie',
+    image: {
+      medium: 'https://upload.wikimedia.org/wikipedia/en/a/a2/5_centimeters_per_second.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/a/a2/5_centimeters_per_second.jpg'
+    },
+    summary: 'Takaki and Akari are two close friends who are forced apart by circumstances, exploring their emotional distance over the years across three distinct chapters.',
+    youtubeId: 'azQ9g_VfV_Y'
+  },
+  {
+    id: 'anime-6',
+    name: 'Suzume (Suzume no Tojimari)',
+    genres: ['Anime', 'Adventure', 'Fantasy', 'Drama'],
+    rating: { average: 8.5 },
+    premiered: '2022-11-11',
+    language: 'Japanese',
+    runtime: 122,
+    type: 'Movie',
+    image: {
+      medium: 'https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg'
+    },
+    summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
+    youtubeId: 'fvYtaumDj0M'
   },
   {
     id: 'anime-7',
@@ -108,15 +108,31 @@ const CURATED_ANIME_MOVIES = [
     runtime: 108,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/1/18/Kimi_no_Suizō_wo_Tabetai_Poster.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/1/18/Kimi_no_Suizō_wo_Tabetai_Poster.jpg'
     },
     summary: 'A high school student finds a diary in a hospital written by his popular classmate who is secretly suffering from a pancreatic terminal illness.',
     youtubeId: '9W9H3Wf_x_M'
   },
   {
     id: 'anime-8',
-    name: 'Howls Moving Castle',
+    name: 'Spirited Away',
+    genres: ['Anime', 'Adventure', 'Fantasy', 'Family'],
+    rating: { average: 9.0 },
+    premiered: '2001-07-20',
+    language: 'Japanese',
+    runtime: 125,
+    type: 'Movie',
+    image: {
+      medium: 'https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg'
+    },
+    summary: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
+    youtubeId: 'ByXuk9QqQkk'
+  },
+  {
+    id: 'anime-9',
+    name: 'Howl\'s Moving Castle',
     genres: ['Anime', 'Fantasy', 'Adventure', 'Romance'],
     rating: { average: 8.7 },
     premiered: '2004-11-20',
@@ -124,36 +140,20 @@ const CURATED_ANIME_MOVIES = [
     runtime: 119,
     type: 'Movie',
     image: {
-      medium: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=800&auto=format&fit=crop'
+      medium: 'https://upload.wikimedia.org/wikipedia/en/a/a1/Howls-moving-castleposter.jpg',
+      original: 'https://upload.wikimedia.org/wikipedia/en/a/a1/Howls-moving-castleposter.jpg'
     },
     summary: 'When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet young wizard.',
     youtubeId: 'ywMqf056ar0'
-  },
-  {
-    id: 'anime-9',
-    name: '5 Centimeters per Second',
-    genres: ['Anime', 'Romance', 'Drama'],
-    rating: { average: 7.9 },
-    premiered: '2007-03-03',
-    language: 'Japanese',
-    runtime: 63,
-    type: 'Movie',
-    image: {
-      medium: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=400&auto=format&fit=crop',
-      original: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop'
-    },
-    summary: 'Togaki and Akari are two close friends who are forced apart by circumstances, exploring their emotional distance over the years across three distinct chapters.',
-    youtubeId: 'azQ9g_VfV_Y'
   }
 ]
 
 const BACKGROUND_POSTERS = [
-  "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=400&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=400&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=400&auto=format&fit=crop",
+  "https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png",
+  "https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg",
+  "https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg",
+  "https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg",
+  "https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg"
 ]
 
 const CATEGORIES = [
@@ -163,7 +163,7 @@ const CATEGORIES = [
 
 // 🎬 MOVIE CARD COMPONENT
 const MovieCard = ({ show, onClick }) => {
-  const posterUrl = show.image?.medium || show.image?.original || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop';
+  const posterUrl = show.image?.medium || show.image?.original || 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
   
   return (
     <div 
@@ -177,7 +177,7 @@ const MovieCard = ({ show, onClick }) => {
           className="w-full h-72 object-cover"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop';
+            e.target.src = 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
@@ -394,7 +394,7 @@ export default function App() {
           {[...Array(10)].map((_, colIndex) => (
             <div key={colIndex} className={`scroll-column ${colIndex % 2 === 0 ? 'animate-scroll-up' : 'animate-scroll-down'}`}>
               {[...BACKGROUND_POSTERS, ...BACKGROUND_POSTERS].map((poster, imgIndex) => (
-                <img key={imgIndex} src={poster} alt="bg" className="w-full rounded-lg shadow-2xl brightness-50" />
+                <img key={imgIndex} src={poster} alt="bg" className="w-full rounded-lg shadow-2xl brightness-50 object-cover" />
               ))}
             </div>
           ))}
@@ -454,9 +454,9 @@ export default function App() {
             {activeCategory === 'Anime Movie' && !isSearching && (
               <div className="relative w-full h-[380px] rounded-2xl overflow-hidden mb-12 shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-zinc-800 flex items-center">
                 <img 
-                  src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1600&auto=format&fit=crop" 
+                  src="https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png" 
                   alt="Anime Movie Banner" 
-                  className="absolute inset-0 w-full h-full object-cover brightness-[0.45]"
+                  className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
                 
@@ -543,12 +543,12 @@ export default function App() {
 
             <div className="flex flex-col md:flex-row gap-8">
               <img 
-                src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop'} 
+                src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png'} 
                 alt={selectedMovie.name} 
                 className="w-full md:w-72 h-auto object-cover rounded-lg shadow-2xl border border-zinc-800"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=400&auto=format&fit=crop';
+                  e.target.src = 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
                 }}
               />
 
