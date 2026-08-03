@@ -497,12 +497,11 @@ export default function App() {
             
             activeCategory === 'Home' ? (
               <div className="flex flex-col gap-2">
-                {/* 🚀 AUTO-MOVING TOP FEATURED CAROUSEL */}
-                <AutoFeaturedCarousel movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
+                
 
                 {/* MULTI-ROW CATEGORY CONTENT */}
-                <MovieRow title="🌸 Masterpiece Anime Movies" movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Intense Mystery Series (Dark, From)" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
+                
+                <MovieRow title="Intense Mystery Series" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Anime Series" movies={getCategoryMovies('Anime Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Blockbuster Action" movies={getCategoryMovies('Action')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Epic Fantasy & Sci-Fi" movies={getCategoryMovies('Fantasy')} onMovieSelect={setSelectedMovie} />
