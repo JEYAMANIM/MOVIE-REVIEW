@@ -252,7 +252,7 @@ export default function App() {
             
             activeCategory === 'Home' ? (
               <div className="flex flex-col gap-4">
-                <MovieRow title="Intense Series (Dark, From)" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Intense Series" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Anime Series" movies={getCategoryMovies('Anime Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Blockbuster Action" movies={getCategoryMovies('Action')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Entertainment & Comedy" movies={getCategoryMovies('Entertainment')} onMovieSelect={setSelectedMovie} />
