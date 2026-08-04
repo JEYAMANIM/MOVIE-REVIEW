@@ -230,7 +230,7 @@ const AutoFeaturedCarousel = ({ movies, onMovieSelect }) => {
     <div className="relative w-full mb-12 group">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-black text-white pl-4 border-l-4 border-red-600 uppercase tracking-wide">
-          🔥 Featured Spotlight
+          Featured Spotlight
         </h2>
         <span className="text-xs text-zinc-400 italic pr-2">Auto-Scrolling • Hover to Pause</span>
       </div>
@@ -501,8 +501,8 @@ export default function App() {
                 <AutoFeaturedCarousel movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
 
                 {/* MULTI-ROW CATEGORY CONTENT */}
-                <MovieRow title="🌸 Masterpiece Anime Movies" movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
-                <MovieRow title="Intense Mystery Series (Dark, From)" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Masterpiece Anime Movies" movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Intense Mystery Series" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Anime Series" movies={getCategoryMovies('Anime Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Blockbuster Action" movies={getCategoryMovies('Action')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Epic Fantasy & Sci-Fi" movies={getCategoryMovies('Fantasy')} onMovieSelect={setSelectedMovie} />
