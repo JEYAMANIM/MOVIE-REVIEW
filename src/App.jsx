@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 
-// 🌸 PERFECT MATCHED ANIME MOVIES COLLECTION WITH STABLE DIRECT POSTER URLS
 const CURATED_ANIME_MOVIES = [
   {
     id: 'anime-1',
@@ -12,8 +11,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 106,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png',
-      original: 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png'
+      medium: 'https://m.media-amazon.com/images/M/MV5BNGYyNzI3MWYtZjliNC00ZjY2LWEwNjYtOGZjZDJjNWQxYjNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BNGYyNzI3MWYtZjliNC00ZjY2LWEwNjYtOGZjZDJjNWQxYjNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg'
     },
     summary: 'Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?',
     youtubeId: 'xU47NhruN-Q'
@@ -28,8 +27,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 112,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BNzE4ZDEzNmUtM2I1YS00NDQ0LWI0M2EtZDg0YTY0NmE3YjM5XkEyXkFqcGdeQXVyMTA3OTEyMzE1._V1_SY1000_CR0,0,675,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BNzE4ZDEzNmUtM2I1YS00NDQ0LWI0M2EtZDg0YTY0NmE3YjM5XkEyXkFqcGdeQXVyMTA3OTEyMzE1._V1_SY1000_CR0,0,675,1000_AL_.jpg'
     },
     summary: 'A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.',
     youtubeId: 'QEm4SkXrVQM'
@@ -44,8 +43,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 46,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/5/5b/The_Garden_of_Words_poster.png',
-      original: 'https://upload.wikimedia.org/wikipedia/en/5/5b/The_Garden_of_Words_poster.png'
+      medium: 'https://m.media-amazon.com/images/M/MV5BNWM1NmY3YmYtNjdiOS00NmE2LWE0OWEtNTM0NDc5YjZlOGE2XkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_SY1000_CR0,0,707,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BNWM1NmY3YmYtNjdiOS00NmE2LWE0OWEtNTM0NDc5YjZlOGE2XkEyXkFqcGdeQXVyMzgxODM4NjM@._V1_SY1000_CR0,0,707,1000_AL_.jpg'
     },
     summary: 'A 15-year-old boy and a 27-year-old woman find an unexpected friendship in Tokyo during the rainy season through shoe design and poetry.',
     youtubeId: 's2U_KXvxgSI'
@@ -60,8 +59,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 130,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTctZTBjZi00NzI0LWIzNzktNTBhMTRmZmYwZjg0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,707,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTctZTBjZi00NzI0LWIzNzktNTBhMTRmZmYwZjg0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,707,1000_AL_.jpg'
     },
     summary: 'A young man is ostracized by his classmates after he bullies a deaf girl to the point where she moves away. Years later, he sets off upon a path for redemption.',
     youtubeId: 'nfKccmkRKd0'
@@ -76,8 +75,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 63,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/a/a2/5_centimeters_per_second.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/a/a2/5_centimeters_per_second.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BZDJhYjI0M2UtMjQ0MC00YjE3LWFiMGYtNzg5ZGY1N2RjODZjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,707,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BZDJhYjI0M2UtMjQ0MC00YjE3LWFiMGYtNzg5ZGY1N2RjODZjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,707,1000_AL_.jpg'
     },
     summary: 'Takaki and Akari are two close friends who are forced apart by circumstances, exploring their emotional distance over the years across three distinct chapters.',
     youtubeId: 'azQ9g_VfV_Y'
@@ -92,8 +91,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 122,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BMjEzYjA0MzAtZGRmZi00NmEwLWE1NWMtMGRmZDIyMTE0YzA0XkEyXkFqcGdeQXVyMTIzMDU0NjY5._V1_SY1000_CR0,0,675,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BMjEzYjA0MzAtZGRmZi00NmEwLWE1NWMtMGRmZDIyMTE0YzA0XkEyXkFqcGdeQXVyMTIzMDU0NjY5._V1_SY1000_CR0,0,675,1000_AL_.jpg'
     },
     summary: 'A modern action-adventure road story where a 17-year-old girl named Suzume helps a mysterious young man close doors from the other side that are releasing disasters all over Japan.',
     youtubeId: 'fvYtaumDj0M'
@@ -108,8 +107,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 108,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/1/18/Kimi_no_Suizō_wo_Tabetai_Poster.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/1/18/Kimi_no_Suizō_wo_Tabetai_Poster.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BZWQxMjBjNmUtZDE3Mi00OWI5LThhYzEtOGFmOTZjN2NlZTMzXkEyXkFqcGdeQXVyNDg4NjE5OTQ@._V1_SY1000_CR0,0,707,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BZWQxMjBjNmUtZDE3Mi00OWI5LThhYzEtOGFmOTZjN2NlZTMzXkEyXkFqcGdeQXVyNDg4NjE5OTQ@._V1_SY1000_CR0,0,707,1000_AL_.jpg'
     },
     summary: 'A high school student finds a diary in a hospital written by his popular classmate who is secretly suffering from a pancreatic terminal illness.',
     youtubeId: '9W9H3Wf_x_M'
@@ -124,15 +123,15 @@ const CURATED_ANIME_MOVIES = [
     runtime: 125,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg'
     },
-    summary: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
+    summary: "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.",
     youtubeId: 'ByXuk9QqQkk'
   },
   {
     id: 'anime-9',
-    name: 'Howl\'s Moving Castle',
+    name: "Howl's Moving Castle",
     genres: ['Anime', 'Fantasy', 'Adventure', 'Romance'],
     rating: { average: 8.7 },
     premiered: '2004-11-20',
@@ -140,8 +139,8 @@ const CURATED_ANIME_MOVIES = [
     runtime: 119,
     type: 'Movie',
     image: {
-      medium: 'https://upload.wikimedia.org/wikipedia/en/a/a1/Howls-moving-castleposter.jpg',
-      original: 'https://upload.wikimedia.org/wikipedia/en/a/a1/Howls-moving-castleposter.jpg'
+      medium: 'https://m.media-amazon.com/images/M/MV5BNmM4YTFmMmEtOGNiNC00NWIyLWFjMjYtYzJmZDhhZTk0ODRiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,689,1000_AL_.jpg',
+      original: 'https://m.media-amazon.com/images/M/MV5BNmM4YTFmMmEtOGNiNC00NWIyLWFjMjYtYzJmZDhhZTk0ODRiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,689,1000_AL_.jpg'
     },
     summary: 'When an unconfident young woman is cursed with an old body by a spiteful witch, her only chance of breaking the spell lies with a self-indulgent yet young wizard.',
     youtubeId: 'ywMqf056ar0'
@@ -149,11 +148,12 @@ const CURATED_ANIME_MOVIES = [
 ]
 
 const BACKGROUND_POSTERS = [
-  "https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png",
-  "https://upload.wikimedia.org/wikipedia/en/5/5a/Weathering_with_You_Poster.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/1/1d/Suzume_poster.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/3/3a/A_Silent_Voice_Film_Poster.jpg",
-  "https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.jpg"
+  "https://m.media-amazon.com/images/M/MV5BNGYyNzI3MWYtZjliNC00ZjY2LWEwNjYtOGZjZDJjNWQxYjNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+  "https://m.media-amazon.com/images/M/MV5BNzE4ZDEzNmUtM2I1YS00NDQ0LWI0M2EtZDg0YTY0NmE3YjM5XkEyXkFqcGdeQXVyMTA3OTEyMzE1._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+  "https://m.media-amazon.com/images/M/MV5BMjEzYjA0MzAtZGRmZi00NmEwLWE1NWMtMGRmZDIyMTE0YzA0XkEyXkFqcGdeQXVyMTIzMDU0NjY5._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+  "https://m.media-amazon.com/images/M/MV5BZGRkOGMxYTctZTBjZi00NzI0LWIzNzktNTBhMTRmZmYwZjg0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,707,1000_AL_.jpg",
+  "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg",
+  "https://m.media-amazon.com/images/M/MV5BNmM4YTFmMmEtOGNiNC00NWIyLWFjMjYtYzJmZDhhZTk0ODRiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,689,1000_AL_.jpg"
 ]
 
 const CATEGORIES = [
@@ -161,35 +161,30 @@ const CATEGORIES = [
   'Entertainment', 'Action', 'Romance', 'Horror', 'Adventure', 'Fantasy', 'Family'
 ]
 
-// 🎬 MOVIE CARD COMPONENT
 const MovieCard = ({ show, onClick }) => {
-  const posterUrl = show.image?.medium || show.image?.original || 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
+  const posterUrl = show.image?.medium || show.image?.original || 'https://m.media-amazon.com/images/M/MV5BNGYyNzI3MWYtZjliNC00ZjY2LWEwNjYtOGZjZDJjNWQxYjNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg';
   
   return (
     <div 
       onClick={onClick}
-      className="min-w-[200px] max-w-[200px] flex flex-col items-center hover:scale-[1.08] hover:z-30 cursor-pointer transition-all duration-300 group flex-shrink-0"
+      className="min-w-[200px] max-w-[200px] flex flex-col items-center hover:scale-105 hover:-translate-y-2 hover:z-30 cursor-pointer transition-all duration-300 group flex-shrink-0"
     >
-      <div className="relative w-full overflow-hidden rounded-xl shadow-2xl shadow-black border border-zinc-800 group-hover:border-red-600 bg-zinc-900">
+      <div className="relative w-full overflow-hidden rounded-xl shadow-2xl shadow-black/80 border border-zinc-800 group-hover:border-red-600 bg-zinc-900">
         <img 
           src={posterUrl} 
           alt={show.name}
-          className="w-full h-72 object-cover"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
-          }}
+          className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-          <span className="bg-red-600 text-xs px-3 py-1 rounded-full text-white font-bold shadow-lg">
+          <span className="bg-red-600 text-xs px-3 py-1 rounded-full text-white font-bold shadow-lg animate-pulse">
             View Details
           </span>
         </div>
       </div>
-      <h2 className="font-bold text-base text-center line-clamp-1 w-full mt-3 drop-shadow-md text-white">{show.name}</h2>
+      <h2 className="font-bold text-base text-center line-clamp-1 w-full mt-3 text-white group-hover:text-red-500 transition-colors">{show.name}</h2>
       <div className="flex justify-between w-full text-zinc-400 text-xs mt-1 px-2 font-medium">
         <span>{show.premiered ? show.premiered.substring(0, 4) : 'N/A'}</span>
-        <span className="text-yellow-500 font-bold drop-shadow-md">
+        <span className="text-yellow-500 font-bold">
           {show.rating?.average ? `⭐ ${show.rating.average}` : ''}
         </span>
       </div>
@@ -197,7 +192,6 @@ const MovieCard = ({ show, onClick }) => {
   )
 }
 
-// 🎬 AUTO-MOVING TOP FEATURED CAROUSEL
 const AutoFeaturedCarousel = ({ movies, onMovieSelect }) => {
   const scrollRef = useRef(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -213,7 +207,7 @@ const AutoFeaturedCarousel = ({ movies, onMovieSelect }) => {
           scrollRef.current.scrollBy({ left: 240, behavior: 'smooth' })
         }
       }
-    }, 2500)
+    }, 2800)
     return () => clearInterval(timer)
   }, [isHovered, movies])
 
@@ -260,7 +254,6 @@ const AutoFeaturedCarousel = ({ movies, onMovieSelect }) => {
   )
 }
 
-// 🎬 STANDARD HORIZONTAL MOVIE ROW
 const MovieRow = ({ title, movies, onMovieSelect }) => {
   const scrollRef = useRef(null)
 
@@ -374,40 +367,68 @@ export default function App() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden pb-12">
+    <div className="relative min-h-screen w-full bg-black text-white font-sans overflow-x-hidden pb-20">
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* 🌌 HIGH-END CINEMATIC BACKGROUND DRIFT ANIMATION */
         .bg-wall-container {
-          transform: rotate(-12deg) scale(1.3);
-          width: 150vw; height: 150vh; position: fixed; left: -25vw; top: -25vh; display: flex; gap: 1rem;
+          position: fixed;
+          top: -20vh;
+          left: -10vw;
+          width: 120vw;
+          height: 140vh;
+          display: flex;
+          gap: 2rem;
+          transform: rotate(-8deg) scale(1.15);
+          pointer-events: none;
+          z-index: 0;
         }
-        .scroll-column { display: flex; flex-direction: column; gap: 1rem; width: 250px; }
-        .animate-scroll-up { animation: scrollUp 45s linear infinite; }
-        .animate-scroll-down { animation: scrollDown 45s linear infinite; }
-        @keyframes scrollUp { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-        @keyframes scrollDown { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+        .scroll-column {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          width: 220px;
+          flex-shrink: 0;
+        }
+        .animate-drift-up {
+          animation: driftUp 35s linear infinite;
+        }
+        .animate-drift-down {
+          animation: driftDown 40s linear infinite;
+        }
+        @keyframes driftUp {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        @keyframes driftDown {
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0); }
+        }
       `}</style>
 
-      {/* 🎬 ANIMATED NETFLIX BACKGROUND WALL */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none opacity-25">
-        <div className="bg-wall-container">
-          {[...Array(10)].map((_, colIndex) => (
-            <div key={colIndex} className={`scroll-column ${colIndex % 2 === 0 ? 'animate-scroll-up' : 'animate-scroll-down'}`}>
-              {[...BACKGROUND_POSTERS, ...BACKGROUND_POSTERS].map((poster, imgIndex) => (
-                <img key={imgIndex} src={poster} alt="bg" className="w-full rounded-lg shadow-2xl brightness-50 object-cover" />
+      {/* 🌟 IMMERSIVE BACKGROUND GLOW & ANIMATED POSTER WALL */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="bg-wall-container opacity-20 filter blur-[2px]">
+          {[...Array(6)].map((_, colIndex) => (
+            <div key={colIndex} className={`scroll-column ${colIndex % 2 === 0 ? 'animate-drift-up' : 'animate-drift-down'}`}>
+              {[...BACKGROUND_POSTERS, ...BACKGROUND_POSTERS, ...BACKGROUND_POSTERS].map((poster, imgIndex) => (
+                <img key={imgIndex} src={poster} alt="bg" className="w-full h-80 rounded-xl object-cover shadow-2xl border border-white/5" />
               ))}
             </div>
           ))}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+        {/* Multi-layered Vignette Overlay for Depth */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/50 to-black"></div>
       </div>
 
       {/* 🌟 NAVIGATION BAR */}
-      <nav className="fixed top-0 w-full z-40 bg-gradient-to-b from-black via-black/90 to-transparent pt-6 pb-8 px-8 flex flex-col xl:flex-row justify-between items-center gap-6 transition-all">
+      <nav className="sticky top-0 w-full z-40 bg-black/90 backdrop-blur-xl border-b border-zinc-800/80 px-8 py-5 flex flex-col xl:flex-row justify-between items-center gap-6 shadow-2xl">
         <div className="flex flex-col xl:flex-row items-center gap-8 w-full xl:w-auto">
           <h1 
             onClick={() => { setIsSearching(false); setActiveCategory('Home'); setSearchTerm(''); }}
-            className="text-4xl font-extrabold text-red-600 uppercase tracking-widest cursor-pointer drop-shadow-lg shrink-0"
+            className="text-3xl font-extrabold text-red-600 uppercase tracking-widest cursor-pointer drop-shadow-md hover:text-red-500 transition shrink-0"
           >
             Review
           </h1>
@@ -417,7 +438,7 @@ export default function App() {
               <li 
                 key={category} 
                 onClick={() => { setIsSearching(false); setActiveCategory(category); setSearchTerm(''); }}
-                className={`cursor-pointer transition hover:text-white hover:scale-110 ${activeCategory === category && !isSearching ? 'text-white border-b-2 border-red-600 pb-1' : ''}`}
+                className={`cursor-pointer transition hover:text-white ${activeCategory === category && !isSearching ? 'text-white border-b-2 border-red-600 pb-1 font-bold' : ''}`}
               >
                 {category}
               </li>
@@ -425,7 +446,7 @@ export default function App() {
           </ul>
         </div>
 
-        {/* Search */}
+        {/* Search Bar */}
         <div className="flex gap-2 w-full sm:w-auto justify-center shrink-0">
           <input 
             type="text" 
@@ -433,32 +454,32 @@ export default function App() {
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Titles, people, genres..." 
-            className="px-4 py-2 rounded bg-zinc-900/80 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 backdrop-blur-md w-full sm:w-64 text-sm shadow-inner"
+            className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:border-red-600 w-full sm:w-64 text-sm shadow-inner transition"
           />
           <button 
             onClick={handleSearch}
-            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded font-bold text-white shadow-lg transition"
+            className="bg-red-600 hover:bg-red-700 px-5 py-2 rounded-lg font-bold text-white shadow-lg transition"
           >Search</button>
         </div>
       </nav>
 
-      {/* 🌟 MAIN CONTENT AREA */}
-      <div className="relative z-10 w-full px-8 pt-56 xl:pt-40">
+      {/* 🌟 MAIN CONTENT CONTAINER (Proper Spacing to Avoid Overlap) */}
+      <div className="relative z-10 w-full px-8 mt-8">
         
-        {loading && <div className="text-center text-red-500 font-bold text-2xl animate-pulse mt-20">Loading Library...</div>}
-        {error && <div className="text-center text-red-400 font-bold mt-20">{error}</div>}
+        {loading && <div className="text-center text-red-500 font-bold text-2xl animate-pulse mt-24">Loading Library...</div>}
+        {error && <div className="text-center text-red-400 font-bold mt-24">{error}</div>}
 
         {!loading && (
           <>
             {/* 🌸 HERO BANNER FOR ANIME MOVIE PAGE */}
             {activeCategory === 'Anime Movie' && !isSearching && (
-              <div className="relative w-full h-[380px] rounded-2xl overflow-hidden mb-12 shadow-[0_10px_40px_rgba(0,0,0,0.8)] border border-zinc-800 flex items-center">
+              <div className="relative w-full h-[380px] rounded-2xl overflow-hidden mb-12 shadow-2xl border border-zinc-800 flex items-center">
                 <img 
-                  src="https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png" 
+                  src="https://m.media-amazon.com/images/M/MV5BNGYyNzI3MWYtZjliNC00ZjY2LWEwNjYtOGZjZDJjNWQxYjNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SY1000_CR0,0,675,1000_AL_.jpg" 
                   alt="Anime Movie Banner" 
-                  className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
+                  className="absolute inset-0 w-full h-full object-cover brightness-[0.35]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent"></div>
                 
                 <div className="relative z-10 px-8 md:px-16 max-w-2xl">
                   <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block shadow-lg">
@@ -497,11 +518,10 @@ export default function App() {
             
             activeCategory === 'Home' ? (
               <div className="flex flex-col gap-2">
-                
+                <AutoFeaturedCarousel movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
 
-                {/* MULTI-ROW CATEGORY CONTENT */}
-                
-                <MovieRow title="Intense Mystery Series" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="🌸 Masterpiece Anime Movies" movies={CURATED_ANIME_MOVIES} onMovieSelect={setSelectedMovie} />
+                <MovieRow title="Intense Mystery Series (Dark, From)" movies={getCategoryMovies('Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Anime Series" movies={getCategoryMovies('Anime Series')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Blockbuster Action" movies={getCategoryMovies('Action')} onMovieSelect={setSelectedMovie} />
                 <MovieRow title="Epic Fantasy & Sci-Fi" movies={getCategoryMovies('Fantasy')} onMovieSelect={setSelectedMovie} />
@@ -533,8 +553,8 @@ export default function App() {
 
       {/* 🎬 MOVIE DETAILS MODAL */}
       {selectedMovie && !playingVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.15)] text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-all">
+          <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-8 relative shadow-[0_0_50px_rgba(220,38,38,0.2)] text-white">
             <button 
               onClick={() => setSelectedMovie(null)}
               className="absolute top-4 right-4 bg-zinc-900 hover:bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center transition font-bold shadow-lg z-10"
@@ -542,13 +562,9 @@ export default function App() {
 
             <div className="flex flex-col md:flex-row gap-8">
               <img 
-                src={selectedMovie.image?.original || selectedMovie.image?.medium || 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png'} 
+                src={selectedMovie.image?.original || selectedMovie.image?.medium} 
                 alt={selectedMovie.name} 
                 className="w-full md:w-72 h-auto object-cover rounded-lg shadow-2xl border border-zinc-800"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = 'https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png';
-                }}
               />
 
               <div className="flex-1 flex flex-col justify-center">
@@ -598,10 +614,10 @@ export default function App() {
 
       {/* 🚀 FULL SCREEN VIDEO PLAYER */}
       {playingVideo && (
-        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center animate-in fade-in zoom-in duration-300">
+        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
           <button 
             onClick={() => setPlayingVideo(null)}
-            className="absolute top-6 right-8 z-50 bg-black/50 hover:bg-red-600 text-white rounded-full w-14 h-14 flex items-center justify-center transition font-bold text-2xl border border-zinc-700 backdrop-blur-md"
+            className="absolute top-6 right-8 z-50 bg-black/60 hover:bg-red-600 text-white rounded-full w-14 h-14 flex items-center justify-center transition font-bold text-2xl border border-zinc-700 backdrop-blur-md"
             title="Close Player"
           >✕</button>
 
